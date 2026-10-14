@@ -1,0 +1,555 @@
+{
+	"id": "6a59cba1-ac33-43bf-a080-8c6eac952924",
+	"name": "Catálogo de Livros",
+	"timestamp": "2026-10-14T21:06:53.478Z",
+	"collection_id": "33317909-0bfe33a0-2b6d-4868-ba1f-35062621b6e6",
+	"folder_id": 0,
+	"environment_id": "33317909-da3f6dd2-f857-4bfe-b7d8-74502f805709",
+	"totalPass": 31,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2026-10-14T21:06:52.309Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "d04d5936-3908-4a8a-bf9f-c9272e0270f0",
+			"name": "Listar Usuários",
+			"url": "http://localhost:3000/api/users?page=1&limit=20",
+			"time": 19,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				19
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "513c9dcf-21f7-46cd-9670-db755333f913",
+			"name": "Criação Usuário Admin",
+			"url": "http://localhost:3000/api/users",
+			"time": 91,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status Code is 201": true,
+				"Sucess Message": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sucess Message": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				91
+			],
+			"allTests": [
+				{
+					"Status Code is 201": true,
+					"Sucess Message": true
+				}
+			]
+		},
+		{
+			"id": "98ad3280-e027-467f-a704-976cd7851c00",
+			"name": "Login",
+			"url": "http://localhost:3000/api/login",
+			"time": 83,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status Code is 200": true,
+				"Token is Not Empty": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Token is Not Empty": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				83
+			],
+			"allTests": [
+				{
+					"Status Code is 200": true,
+					"Token is Not Empty": true
+				}
+			]
+		},
+		{
+			"id": "b7011980-4cec-4d8f-8821-9b01793b3861",
+			"name": "Lista Livros com Filtro e Paginação",
+			"url": "http://localhost:3000/api/books?search=machado&category=Literatura%20Brasileira&author=Machado%20de%20Assis&available=true&limit=20&offset=0&orderBy=title&order=ASC",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status Code is 200": true,
+				"Find the Searched Author": true,
+				"Find the Searched Category": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Find the Searched Author": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Find the Searched Category": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status Code is 200": true,
+					"Find the Searched Author": true,
+					"Find the Searched Category": true
+				}
+			]
+		},
+		{
+			"id": "31b596de-8b13-49ab-870f-d7543ea44e5e",
+			"name": "Adicionar Novo Livro",
+			"url": "http://localhost:3000/api/books",
+			"time": 25,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status Code is 201": true,
+				"Sucess Message": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sucess Message": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				25
+			],
+			"allTests": [
+				{
+					"Status Code is 201": true,
+					"Sucess Message": true
+				}
+			]
+		},
+		{
+			"id": "7f64c7ea-f515-4cf1-8dce-ed4d011529d6",
+			"name": "Adicionar Mesmo Livro Novamente",
+			"url": "http://localhost:3000/api/books",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status Code is 400": true,
+				"Create Error: Book Registered": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Create Error: Book Registered": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status Code is 400": true,
+					"Create Error: Book Registered": true
+				}
+			]
+		},
+		{
+			"id": "a37d2c89-f036-454b-b638-ea2581c7da5f",
+			"name": "Listar Categorias",
+			"url": "http://localhost:3000/api/books/categories",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status Code is 200": true,
+				"The Answer contains The List 'Categories'": true,
+				"Each Category must have a ‘Name’ and cannot be Empty": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The Answer contains The List 'Categories'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Each Category must have a ‘Name’ and cannot be Empty": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status Code is 200": true,
+					"The Answer contains The List 'Categories'": true,
+					"Each Category must have a ‘Name’ and cannot be Empty": true
+				}
+			]
+		},
+		{
+			"id": "47c62eeb-d5c0-4725-893d-f7cbc31a0fb3",
+			"name": "Listar Autores",
+			"url": "http://localhost:3000/api/books/authors",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status Code is 200": true,
+				"The Answer contains The List 'Authors'": true,
+				"Each Category must have a ‘Name’ and cannot be Empty": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The Answer contains The List 'Authors'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Each Category must have a ‘Name’ and cannot be Empty": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status Code is 200": true,
+					"The Answer contains The List 'Authors'": true,
+					"Each Category must have a ‘Name’ and cannot be Empty": true
+				}
+			]
+		},
+		{
+			"id": "1147a3a8-75a8-4732-b9cf-e35c9180790d",
+			"name": "Obter Detalhes de Livro por ID",
+			"url": "http://localhost:3000/api/books/7",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status Code is 200": true,
+				"Response has a Book Object": true,
+				"The Available Copies cannot exceed the Total of Copies": true,
+				"The Book is Available and Copies are in Stock": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has a Book Object": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The Available Copies cannot exceed the Total of Copies": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The Book is Available and Copies are in Stock": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status Code is 200": true,
+					"Response has a Book Object": true,
+					"The Available Copies cannot exceed the Total of Copies": true,
+					"The Book is Available and Copies are in Stock": true
+				}
+			]
+		},
+		{
+			"id": "e91b45c8-af20-44af-ba46-08c0693899d1",
+			"name": "Atualizar Livro como Admin",
+			"url": "http://localhost:3000/api/books/7",
+			"time": 17,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status Code is 200": true,
+				"Sucess Message is Returned": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sucess Message is Returned": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Status Code is 200": true,
+					"Sucess Message is Returned": true
+				}
+			]
+		},
+		{
+			"id": "73dc5337-80d1-450e-8acb-9e9eae23d584",
+			"name": "Atualizar Livro como Admin com Formato Inexistente",
+			"url": "http://localhost:3000/api/books/7",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status Code is 400": true,
+				"Error - Invalid Format Field": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error - Invalid Format Field": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status Code is 400": true,
+					"Error - Invalid Format Field": true
+				}
+			]
+		},
+		{
+			"id": "bb949b7f-0d23-4d9e-9536-63309396c66d",
+			"name": "Tentar Atualizar Livro sem Token",
+			"url": "http://localhost:3000/api/books/7",
+			"time": 7,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status Code is 401": true,
+				"Error - Missing Token": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error - Missing Token": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status Code is 401": true,
+					"Error - Missing Token": true
+				}
+			]
+		},
+		{
+			"id": "3bc6736e-5072-4815-9e9d-a395a2d46dda",
+			"name": "Remover um Livro como Admin",
+			"url": "http://localhost:3000/api/books/5",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status Code is 200": true,
+				"Sucess Message is Returned": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sucess Message is Returned": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status Code is 200": true,
+					"Sucess Message is Returned": true
+				}
+			]
+		},
+		{
+			"id": "c4b073b9-27fa-4e4e-be46-f59f8434ec44",
+			"name": "Remover um Livro como Admin com ID Inexistente",
+			"url": "http://localhost:3000/api/books/5",
+			"time": 3,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status Code is 404": true,
+				"Error - Missing Book ID": true
+			},
+			"testPassFailCounts": {
+				"Status Code is 404": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error - Missing Book ID": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status Code is 404": true,
+					"Error - Missing Book ID": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 295,
+	"collection": {
+		"requests": [
+			{
+				"id": "d04d5936-3908-4a8a-bf9f-c9272e0270f0",
+				"method": "GET"
+			},
+			{
+				"id": "513c9dcf-21f7-46cd-9670-db755333f913",
+				"method": "POST"
+			},
+			{
+				"id": "98ad3280-e027-467f-a704-976cd7851c00",
+				"method": "POST"
+			},
+			{
+				"id": "b7011980-4cec-4d8f-8821-9b01793b3861",
+				"method": "GET"
+			},
+			{
+				"id": "31b596de-8b13-49ab-870f-d7543ea44e5e",
+				"method": "POST"
+			},
+			{
+				"id": "7f64c7ea-f515-4cf1-8dce-ed4d011529d6",
+				"method": "POST"
+			},
+			{
+				"id": "a37d2c89-f036-454b-b638-ea2581c7da5f",
+				"method": "GET"
+			},
+			{
+				"id": "47c62eeb-d5c0-4725-893d-f7cbc31a0fb3",
+				"method": "GET"
+			},
+			{
+				"id": "1147a3a8-75a8-4732-b9cf-e35c9180790d",
+				"method": "GET"
+			},
+			{
+				"id": "e91b45c8-af20-44af-ba46-08c0693899d1",
+				"method": "PUT"
+			},
+			{
+				"id": "73dc5337-80d1-450e-8acb-9e9eae23d584",
+				"method": "PUT"
+			},
+			{
+				"id": "bb949b7f-0d23-4d9e-9536-63309396c66d",
+				"method": "PUT"
+			},
+			{
+				"id": "3bc6736e-5072-4815-9e9d-a395a2d46dda",
+				"method": "DELETE"
+			},
+			{
+				"id": "c4b073b9-27fa-4e4e-be46-f59f8434ec44",
+				"method": "DELETE"
+			}
+		]
+	}
+}

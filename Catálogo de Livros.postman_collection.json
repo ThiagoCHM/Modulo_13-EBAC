@@ -1,0 +1,619 @@
+{
+  "info": {
+    "_postman_id": "0bfe33a0-2b6d-4868-ba1f-35062621b6e6",
+    "name": "Catálogo de Livros",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33317909",
+    "_collection_link": "https://go.postman.co/collection/33317909-0bfe33a0-2b6d-4868-ba1f-35062621b6e6?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Listar Usuários",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{link}}users?page=1&limit=20",
+          "host": [
+            "{{link}}users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "20"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Criação Usuário Admin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Sucess Message\", function () {\n    pm.expect(pm.response.text()).to.include(\"Usuário criado com sucesso.\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Thiago C. H. Moreira\",\n  \"email\": \"{{mail}}\",\n  \"password\": \"{{pass}}\",\n  \"isAdmin\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{link}}users",
+          "host": [
+            "{{link}}users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\nconst tokenGerado = pm.response.json().token;\npm.environment.set(\"token\", tokenGerado);\n\npm.test(\"Token is Not Empty\", function () {\n    pm.expect(tokenGerado).to.not.be.empty;\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{mail}}\",\n  \"password\": \"{{pass}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{link}}login",
+          "host": [
+            "{{link}}login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Lista Livros com Filtro e Paginação",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\nconst response = pm.response.json();\nconst searchedAuthor = response.filters.author;\n\npm.environment.set(\"author\", searchedAuthor);\n\npm.test(\"Find the Searched Author\", function () {\n    pm.expect(pm.response.text()).to.include(searchedAuthor);\n});\n\nconst searchedCategory = response.filters.category;\npm.test(\"Find the Searched Category\", function () {\n    pm.expect(pm.response.text()).to.include(searchedCategory);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{link}}books?search=machado&category=Literatura%20Brasileira&author=Machado%20de%20Assis&available=true&limit=20&offset=0&orderBy=title&order=ASC",
+          "host": [
+            "{{link}}books"
+          ],
+          "query": [
+            {
+              "key": "search",
+              "value": "machado"
+            },
+            {
+              "key": "category",
+              "value": "Literatura%20Brasileira"
+            },
+            {
+              "key": "author",
+              "value": "Machado%20de%20Assis"
+            },
+            {
+              "key": "available",
+              "value": "true"
+            },
+            {
+              "key": "limit",
+              "value": "20"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            },
+            {
+              "key": "orderBy",
+              "value": "title"
+            },
+            {
+              "key": "order",
+              "value": "ASC"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Adicionar Novo Livro",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Sucess Message\", function () {\n    pm.expect(pm.response.text()).to.include(\"Livro criado com sucesso.\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"O Grande Torneio de Arremesso de Atum: O Evento que Mudou a História\",\n  \"author\": \"Peixoto Fish\",\n  \"description\": \"A verdadeira história de quem viver o maior evento esportivo da humanidade e como este alterou o rumo dos acontecimentos da vida moderna\",\n  \"category\": \"Biografia\",\n  \"isbn\": \"978-85-000-0000-0\",\n  \"editor\": \"Editora Fisher\",\n  \"language\": \"Português\",\n  \"publication_year\": 2011,\n  \"pages\": 356,\n  \"format\": \"Físico\",\n  \"total_copies\": 7,\n  \"available_copies\": 7\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{link}}books",
+          "host": [
+            "{{link}}books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Adicionar Mesmo Livro Novamente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 400\", function () {\n    pm.response.to.have.status(400);\n});\n\npm.test(\"Create Error: Book Registered\", function () {\n    pm.expect(pm.response.text()).to.include(\"Já existe um livro com este título e autor.\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"O Grande Torneio de Arremesso de Atum: O Evento que Mudou a História\",\n  \"author\": \"Peixoto Fish\",\n  \"description\": \"A verdadeira história de quem viver o maior evento esportivo da humanidade e como este alterou o rumo dos acontecimentos da vida moderna\",\n  \"category\": \"Biografia\",\n  \"isbn\": \"978-85-000-0000-0\",\n  \"editor\": \"Editora Fisher\",\n  \"language\": \"Português\",\n  \"publication_year\": 2011,\n  \"pages\": 356,\n  \"format\": \"Físico\",\n  \"total_copies\": 7,\n  \"available_copies\": 7\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{link}}books",
+          "host": [
+            "{{link}}books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar Categorias",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"The Answer contains The List 'Categories'\", function () {\n    pm.expect(pm.response.json()).to.have.property(\"categories\");\n});\n\npm.test(\"Each Category must have a ‘Name’ and cannot be Empty\", function () {\n    const categorias = pm.response.json().categories;\n\n    pm.expect(categorias).to.be.an(\"array\");\n    pm.expect(categorias.length).to.be.greaterThan(0);\n\n    categorias.forEach(function (categoria, index) {\n        pm.expect(categoria, `Index of Category ${index}`).to.have.property(\"name\");\n\n        pm.expect(categoria.name, `Name of Category at Index ${index}`)\n            .to.be.a(\"string\");\n\n        pm.expect(categoria.name.trim().length, `Name cannot be Empty Check ${index}`)\n            .to.be.greaterThan(0);\n    });\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{link}}books/categories",
+          "host": [
+            "{{link}}books"
+          ],
+          "path": [
+            "categories"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar Autores",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"The Answer contains The List 'Authors'\", function () {\n    pm.expect(pm.response.json()).to.have.property(\"authors\");\n});\n\npm.test(\"Each Category must have a ‘Name’ and cannot be Empty\", function () {\n    const listaAutores = pm.response.json().authors;\n\n    pm.expect(listaAutores).to.be.an(\"array\");\n    pm.expect(listaAutores.length).to.be.greaterThan(0);\n\n    listaAutores.forEach(function (autor, index) {\n        pm.expect(autor, `Index of Authors List ${index}`).to.have.property(\"name\");\n\n        pm.expect(autor.name, `Name of Author at Index ${index}`)\n            .to.be.a(\"string\");\n\n        pm.expect(autor.name.trim().length, `Name cannot be Empty Check ${index}`)\n            .to.be.greaterThan(0);\n    });\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{link}}books/authors",
+          "host": [
+            "{{link}}books"
+          ],
+          "path": [
+            "authors"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obter Detalhes de Livro por ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Response has a Book Object\", function () {\n    const resposta = pm.response.json();\n    pm.expect(resposta).to.have.property(\"book\");\n});\n\npm.test(\"The Available Copies cannot exceed the Total of Copies\", function () {\n    const livro = pm.response.json().book;\n    pm.expect(livro.available_copies).to.be.at.most(livro.total_copies);\n});\n\npm.test(\"The Book is Available and Copies are in Stock\", function () {\n    const livro = pm.response.json().book;\n    pm.expect(livro.isAvailable).to.eql(true);\n    pm.expect(livro.availability_status).to.eql(\"available\");\n    pm.expect(livro.available_copies).to.be.above(0);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{link}}books/7",
+          "host": [
+            "{{link}}books"
+          ],
+          "path": [
+            "7"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Atualizar Livro como Admin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Sucess Message is Returned\", function () {\n    pm.expect(pm.response.text()).to.include(\"Livro atualizado com sucesso.\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Nome Livro Atualizado\",\n  \"author\": \"Autor Atualizado\",\n  \"description\": \"Descrição Atualizada do Livro\",\n  \"category\": \"Categoria Atualizada\",\n  \"editor\": \"Editora Atualizada\",\n  \"language\": \"Braille no Idioma Aramaico\",\n  \"publication_year\": 2026,\n  \"pages\": 365,\n  \"format\": \"Audiobook\",\n  \"total_copies\": 12,\n  \"available_copies\": 7\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{link}}books/7",
+          "host": [
+            "{{link}}books"
+          ],
+          "path": [
+            "7"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Atualizar Livro como Admin com Formato Inexistente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 400\", function () {\n    pm.response.to.have.status(400);\n});\n\npm.test(\"Error - Invalid Format Field\", function () {\n    pm.expect(pm.response.text()).to.include(\"must be one of [Físico, Digital, Audiobook]\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Nome Livro Atualizado\",\n  \"author\": \"Autor Atualizado\",\n  \"description\": \"Descrição Atualizada do Livro\",\n  \"category\": \"Categoria Atualizada\",\n  \"editor\": \"Editora Atualizada\",\n  \"language\": \"Braille no Idioma Aramaico\",\n  \"publication_year\": 2026,\n  \"pages\": 365,\n  \"format\": \"Em Nuvem\",\n  \"total_copies\": 12,\n  \"available_copies\": 7\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{link}}books/7",
+          "host": [
+            "{{link}}books"
+          ],
+          "path": [
+            "7"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Tentar Atualizar Livro sem Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 401\", function () {\n    pm.response.to.have.status(401);\n});\n\npm.test(\"Error - Missing Token\", function () {\n    pm.expect(pm.response.text()).to.include(\"Token de acesso necessário\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Nome Livro Atualizado\",\n  \"author\": \"Autor Atualizado\",\n  \"description\": \"Descrição Atualizada do Livro\",\n  \"category\": \"Categoria Atualizada\",\n  \"editor\": \"Editora Atualizada\",\n  \"language\": \"Braille no Idioma Aramaico\",\n  \"publication_year\": 2026,\n  \"pages\": 365,\n  \"format\": \"Audiobook\",\n  \"total_copies\": 12,\n  \"available_copies\": 7\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{link}}books/7",
+          "host": [
+            "{{link}}books"
+          ],
+          "path": [
+            "7"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Remover um Livro como Admin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Sucess Message is Returned\", function () {\n    pm.expect(pm.response.text()).to.include(\"Livro deletado com sucesso.\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{link}}books/5",
+          "host": [
+            "{{link}}books"
+          ],
+          "path": [
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Remover um Livro como Admin com ID Inexistente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Code is 404\", function () {\n    pm.response.to.have.status(404);\n});\n\npm.test(\"Error - Missing Book ID\", function () {\n    pm.expect(pm.response.text()).to.include(\"Livro não encontrado.\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{link}}books/5",
+          "host": [
+            "{{link}}books"
+          ],
+          "path": [
+            "5"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "mail",
+      "value": ""
+    }
+  ]
+}
